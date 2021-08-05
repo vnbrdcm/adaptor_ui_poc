@@ -1,43 +1,114 @@
-import { Core, SingularData } from 'cytoscape';
-import React, { useState } from 'react';
-import CytoscapeComponent from 'react-cytoscapejs';
+import {Core, SingularData} from "cytoscape";
+import React, {useCallback, useState} from "react";
+import CytoscapeComponent from "react-cytoscapejs";
 
-export default function App() {
-    const [count, setCount] = useState(0);
-    const [cyRef, setCy] = useState<Core | null>(null);
-    const elements = [
-        { data: { id: 'one', label: 'Node 1' }, position: { x: 0, y: 0 } },
-        { data: { id: 'two', label: 'Node 2' }, position: { x: 100, y: 0 } },
-        { data: { source: 'one', target: 'two', label: 'Edge from Node1 to Node2' } }
-    ];
+export default function App (): React.FunctionComponent {
 
-    return <div onClick={() => {
-        if (cyRef != null) {
-            const selected: SingularData[] = cyRef.$(':selected').jsons();
-            //const selected = cyRef.$(':selected').jsons().map((el) => JSON.parse(el));
-            if (selected) {
-                selected.forEach((val) => console.log(Object.getOwnPropertyDescriptor(val.data, "id")?.value));
-            }
-        }
-    }} style={{ display: 'flex', width: '600px', height: '600px' }}>
-        <CytoscapeComponent cy={(cy) => {setCy(cy)}} layout={{ name: 'random' }} stylesheet={[
+    const [
+            cyRef,
+            setCy
+        ] = useState<Core | null>(null),
+
+        elements = [
             {
-                selector: 'node',
-                style: {
-                    width: 20,
-                    height: 20,
+                "data": {
+                    "id": "one",
+                    "label": "Node 1"
+                },
+                "position": {
+                    "x": 0,
+                    "y": 0
                 }
             },
             {
-                selector: 'edge',
-                style: {
-                    width: 1
+                "data": {
+                    "id": "two",
+                    "label": "Node 2"
+                },
+                "position": {
+                    "x": 100,
+                    "y": 0
+                }
+            },
+            {
+                "data": {
+                    "label": "Edge from Node1 to Node2",
+                    "source": "one",
+                    "target": "two"
                 }
             }
-        ]} elements={elements} style={{
-            position: "relative",
-            flex: 1,
-            alignItems: "stretch"
-        }} />
-    </div>;
+        ],
+
+        initCy = useCallback(
+            (cy) => {
+
+                setCy(cy);
+
+            },
+            []
+        ),
+        onClick = useCallback(
+            () => {
+
+                if (cyRef !== null) {
+
+                    const selected: SingularData[] =
+                    cyRef.$(":selected").jsons();
+                    if (selected) {
+
+                        selected.forEach((val) => {
+
+                            /* eslint-disable no-console */
+                            console.log(Object.getOwnPropertyDescriptor(
+                                val.data,
+                                "id"
+                            )?.value);
+                            /* eslint-enable no-console */
+
+                        });
+
+                    }
+
+                }
+
+            },
+            [cyRef]
+        );
+
+    return (
+        <div
+            onClick={onClick}
+            style={{
+                "display": "flex",
+                "height": "600px",
+                "width": "600px"
+            }}
+        >
+            <CytoscapeComponent
+                cy={initCy}
+                elements={elements}
+                layout={{"name": "random"}}
+                style={{
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "position": "relative"
+                }}
+                stylesheet={[
+                    {
+                        "selector": "node",
+                        "style": {
+                            "height": 20,
+                            "width": 20
+                        }
+                    },
+                    {
+                        "selector": "edge",
+                        "style": {
+                            "width": 1
+                        }
+                    }
+                ]}
+            />
+        </div>);
+
 }
