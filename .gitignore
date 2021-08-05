@@ -1,0 +1,6 @@
+node_modules
+build
+*.sw[o,p]
+dist/*.js
+dist/*.txt
+
