@@ -3,6 +3,9 @@ const path = require('path');
 module.exports = {
     entry: './src/index.tsx',
     devtool: 'eval-source-map',
+    devServer: {
+        contentBase: './dist',
+    },
     mode: 'development',
     output: {
         filename: 'index.js',
