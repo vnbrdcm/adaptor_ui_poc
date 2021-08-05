@@ -2,7 +2,7 @@ import {Core, SingularData} from "cytoscape";
 import React, {useCallback, useState} from "react";
 import CytoscapeComponent from "react-cytoscapejs";
 
-export default function App (): React.FunctionComponent {
+const App: React.FunctionComponent = () => {
 
     const [
             cyRef,
@@ -111,4 +111,6 @@ export default function App (): React.FunctionComponent {
             />
         </div>);
 
-}
+};
+
+export default App;

@@ -31,6 +31,16 @@
             "error"
         ],
         "max-lines-per-function": "off",
-        "react/forbid-component-props": "off"
+        "react/forbid-component-props": "off",
+        "react/function-component-definition": [
+            "off",
+            {
+                "namedComponents": [
+                    "function-declaration",
+                    "function-expression",
+                    "arrow-function"
+                ]
+            }
+        ]
     }
 }
