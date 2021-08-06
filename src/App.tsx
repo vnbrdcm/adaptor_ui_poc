@@ -52,8 +52,12 @@ const App: React.FunctionComponent = () => {
 
                 if (cyRef !== null) {
 
+                    /*
+                     * This casting is necessary as there is a bug in lib's
+                     * types definitions.
+                     */
                     const selected: SingularData[] =
-                    cyRef.$(":selected").jsons();
+                    cyRef.$(":selected").jsons() as unknown as SingularData[];
                     if (selected) {
 
                         selected.forEach((val) => {
