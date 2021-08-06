@@ -1,4 +1,5 @@
 const path = require('path');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
     entry: './src/index.tsx',
@@ -32,6 +33,7 @@ module.exports = {
             }
         ]
     },
+    plugins: [new ForkTsCheckerWebpackPlugin()],
     resolve: {
         extensions: ['*', '.js', '.jsx', '.tsx', '.ts'],
     },
