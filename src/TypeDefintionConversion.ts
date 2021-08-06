@@ -39,14 +39,14 @@ const typeDefinition2CyImpl = (parentId: string, property: Property)
 
 };
 
-const typeDefinition2Cy = (typeDefinition: TypeDefintion)
+const typeDefinition2Cy = (root: string, typeDefinition: TypeDefintion)
     : Array<ElementDefinition> => {
 
     const ret: Array<ElementDefinition> = [];
     ret.push({
         "data": {
-            "id": "/",
-            "label": "/"
+            "id": root,
+            "label": root
         }
     });
     for (const [
@@ -63,7 +63,7 @@ const typeDefinition2Cy = (typeDefinition: TypeDefintion)
             },
             {
                 "data": {
-                    "source": "/",
+                    "source": root,
                     "target": name
                 }
             },

@@ -11,21 +11,44 @@ const App: React.FunctionComponent = () => {
             setCy
         ] = useState<Core | null>(null),
 
-        elements = typeDefinition2Cy({
-            "a": {
-                "properties": {
-                    "b": {
-                        "type": Type.STRING
+        elements = [
+            ...typeDefinition2Cy(
+                "/",
+                {
+                    "a": {
+                        "properties": {
+                            "b": {
+                                "type": Type.STRING
+                            },
+                            "c": {
+                                "type": Type.FLOAT32
+                            }
+                        }
                     },
-                    "c": {
+                    "d": {
                         "type": Type.FLOAT32
                     }
                 }
-            },
-            "d": {
-                "type": Type.FLOAT32
-            }
-        }),
+            ),
+            ...typeDefinition2Cy(
+                "/*",
+                {
+                    "a*": {
+                        "properties": {
+                            "b*": {
+                                "type": Type.STRING
+                            },
+                            "c*": {
+                                "type": Type.FLOAT32
+                            }
+                        }
+                    },
+                    "d*": {
+                        "type": Type.FLOAT32
+                    }
+                }
+            )
+        ],
 
         initCy = useCallback(
             (cy) => {
