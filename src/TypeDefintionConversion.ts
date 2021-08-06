@@ -15,15 +15,11 @@ const typeDefinition2CyImpl = (parentId: string, property: Property)
             ret.push(
                 {
                     "data": {
-                        "source": parentId,
-                        "target": name
-                    }
-                },
-                {
-                    "data": {
                         "id": name,
-                        "label": name
-                    }
+                        "label": name,
+                        "parent": parentId
+                    },
+                    "group": "nodes"
                 },
                 ...typeDefinition2CyImpl(
                     name,
@@ -39,14 +35,14 @@ const typeDefinition2CyImpl = (parentId: string, property: Property)
 
 };
 
-const typeDefinition2Cy = (typeDefinition: TypeDefintion)
+const typeDefinition2Cy = (root: string, typeDefinition: TypeDefintion)
     : Array<ElementDefinition> => {
 
     const ret: Array<ElementDefinition> = [];
     ret.push({
         "data": {
-            "id": "/",
-            "label": "/"
+            "id": root,
+            "label": root
         }
     });
     for (const [
@@ -58,14 +54,10 @@ const typeDefinition2Cy = (typeDefinition: TypeDefintion)
             {
                 "data": {
                     "id": name,
-                    "label": name
-                }
-            },
-            {
-                "data": {
-                    "source": "/",
-                    "target": name
-                }
+                    "label": name,
+                    "parent": root
+                },
+                "group": "nodes"
             },
             ...typeDefinition2CyImpl(
                 name,

@@ -1,31 +1,29 @@
 import {Core, SingularData} from "cytoscape";
 import React, {useCallback, useState} from "react";
 import CytoscapeComponent from "react-cytoscapejs";
-import {Type} from "./TypeDefintions";
+import {Props} from "./PropsDefinitions";
 import typeDefinition2Cy from "./TypeDefintionConversion";
 
-const App: React.FunctionComponent = () => {
+const JIRA = "Jira";
+const RALLY = "Rally";
+
+const App: React.FunctionComponent<Props> = ({jira, rally}: Props) => {
 
     const [
             cyRef,
             setCy
         ] = useState<Core | null>(null),
 
-        elements = typeDefinition2Cy({
-            "a": {
-                "properties": {
-                    "b": {
-                        "type": Type.STRING
-                    },
-                    "c": {
-                        "type": Type.FLOAT32
-                    }
-                }
-            },
-            "d": {
-                "type": Type.FLOAT32
-            }
-        }),
+        elements = [
+            ...typeDefinition2Cy(
+                JIRA,
+                jira
+            ),
+            ...typeDefinition2Cy(
+                RALLY,
+                rally
+            )
+        ],
 
         initCy = useCallback(
             (cy) => {
@@ -46,17 +44,27 @@ const App: React.FunctionComponent = () => {
                      */
                     const selected: SingularData[] =
                     cyRef.$(":selected").jsons() as unknown as SingularData[];
-                    if (selected) {
+                    /* eslint no-magic-numbers: ["error", { "ignore": [2] }]*/
+                    // eslint-disable-next-line no-warning-comments
+                    // FIXME: proper handling of user input.
+                    if (selected && selected.length === 2) {
 
-                        selected.forEach((val) => {
-
-                            /* eslint-disable no-console */
-                            console.log(Object.getOwnPropertyDescriptor(
-                                val.data,
-                                "id"
-                            )?.value);
-                            /* eslint-enable no-console */
-
+                        const [
+                            an,
+                            bn
+                        ] = selected;
+                        cyRef.add({
+                            "data": {
+                                "source": Object.getOwnPropertyDescriptor(
+                                    an.data,
+                                    "id"
+                                )?.value,
+                                "target": Object.getOwnPropertyDescriptor(
+                                    bn.data,
+                                    "id"
+                                )?.value
+                            },
+                            "group": "edges"
                         });
 
                     }
@@ -95,9 +103,19 @@ const App: React.FunctionComponent = () => {
                         }
                     },
                     {
+                        "selector": ":parent",
+                        "style": {
+                            "background-color": "red",
+                            "background-opacity": 0.333,
+                            "text-halign": "center",
+                            "text-valign": "top"
+                        }
+                    },
+                    {
                         "selector": "edge",
                         "style": {
-                            "width": 1
+                            "line-color": "green",
+                            "width": 3
                         }
                     }
                 ]}
