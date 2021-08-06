@@ -41,6 +41,9 @@
                     "arrow-function"
                 ]
             }
-        ]
+        ],
+        "one-var": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"]
     }
 }

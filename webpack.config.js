@@ -1,4 +1,5 @@
 const path = require('path');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
     entry: './src/index.tsx',
@@ -25,13 +26,14 @@ module.exports = {
                 {
                     loader: "eslint-loader",
                     options: {
-                        fix: false,
+                        fix: true,
                     }
                 }
                 ]
             }
         ]
     },
+    plugins: [new ForkTsCheckerWebpackPlugin()],
     resolve: {
         extensions: ['*', '.js', '.jsx', '.tsx', '.ts'],
     },

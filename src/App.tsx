@@ -1,6 +1,8 @@
 import {Core, SingularData} from "cytoscape";
 import React, {useCallback, useState} from "react";
 import CytoscapeComponent from "react-cytoscapejs";
+import {Type} from "./TypeDefintions";
+import typeDefinition2Cy from "./TypeDefintionConversion";
 
 const App: React.FunctionComponent = () => {
 
@@ -9,35 +11,21 @@ const App: React.FunctionComponent = () => {
             setCy
         ] = useState<Core | null>(null),
 
-        elements = [
-            {
-                "data": {
-                    "id": "one",
-                    "label": "Node 1"
-                },
-                "position": {
-                    "x": 0,
-                    "y": 0
+        elements = typeDefinition2Cy({
+            "a": {
+                "properties": {
+                    "b": {
+                        "type": Type.STRING
+                    },
+                    "c": {
+                        "type": Type.FLOAT32
+                    }
                 }
             },
-            {
-                "data": {
-                    "id": "two",
-                    "label": "Node 2"
-                },
-                "position": {
-                    "x": 100,
-                    "y": 0
-                }
-            },
-            {
-                "data": {
-                    "label": "Edge from Node1 to Node2",
-                    "source": "one",
-                    "target": "two"
-                }
+            "d": {
+                "type": Type.FLOAT32
             }
-        ],
+        }),
 
         initCy = useCallback(
             (cy) => {
@@ -52,8 +40,12 @@ const App: React.FunctionComponent = () => {
 
                 if (cyRef !== null) {
 
+                    /*
+                     * This casting is necessary as there is a bug in lib's
+                     * types definitions.
+                     */
                     const selected: SingularData[] =
-                    cyRef.$(":selected").jsons();
+                    cyRef.$(":selected").jsons() as unknown as SingularData[];
                     if (selected) {
 
                         selected.forEach((val) => {
@@ -98,6 +90,7 @@ const App: React.FunctionComponent = () => {
                         "selector": "node",
                         "style": {
                             "height": 20,
+                            "label": "data(id)",
                             "width": 20
                         }
                     },
