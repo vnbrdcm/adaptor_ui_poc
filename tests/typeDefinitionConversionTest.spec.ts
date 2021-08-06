@@ -17,7 +17,7 @@ describe("typeDefinition2Cy", () => {
                 }
             });
 
-            expect(out).to.have.lengthOf(3);
+            expect(out).to.have.lengthOf(2);
         });
         it("process type definition with several simple properties", () => {
             const out = typeDefinition2Cy("/", {
@@ -29,7 +29,7 @@ describe("typeDefinition2Cy", () => {
                 },
             });
 
-            expect(out).to.have.lengthOf(5);
+            expect(out).to.have.lengthOf(3);
         });
         it("process type definition with composed properties", () => {
             const out = typeDefinition2Cy("/", {
@@ -42,7 +42,7 @@ describe("typeDefinition2Cy", () => {
                 }
             });
 
-            expect(out).to.have.lengthOf(5);
+            expect(out).to.have.lengthOf(3);
         });
     });
 });
