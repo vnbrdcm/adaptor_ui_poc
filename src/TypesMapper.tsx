@@ -7,7 +7,12 @@ import typeDefinition2Cy from "./TypeDefintionConversion";
 const JIRA = "Jira";
 const RALLY = "Rally";
 
-const App: React.FunctionComponent<Props> = ({jira, rally}: Props) => {
+const TypesMapper: React.FunctionComponent<Props> = ({
+    jira,
+    rally,
+    mapping,
+    onNodesSelected
+}: Props) => {
 
     const [
             cyRef,
@@ -22,7 +27,14 @@ const App: React.FunctionComponent<Props> = ({jira, rally}: Props) => {
             ...typeDefinition2Cy(
                 RALLY,
                 rally
-            )
+            ),
+            ...mapping.map((connection) => ({
+                "data": {
+                    "source": connection.firstId,
+                    "target": connection.lastId
+                }
+            }))
+
         ],
 
         initCy = useCallback(
@@ -44,28 +56,13 @@ const App: React.FunctionComponent<Props> = ({jira, rally}: Props) => {
                      */
                     const selected: SingularData[] =
                     cyRef.$(":selected").jsons() as unknown as SingularData[];
-                    /* eslint no-magic-numbers: ["error", { "ignore": [2] }]*/
-                    // eslint-disable-next-line no-warning-comments
-                    // FIXME: proper handling of user input.
-                    if (selected && selected.length === 2) {
+                    if (onNodesSelected) {
 
-                        const [
-                            an,
-                            bn
-                        ] = selected;
-                        cyRef.add({
-                            "data": {
-                                "source": Object.getOwnPropertyDescriptor(
-                                    an.data,
-                                    "id"
-                                )?.value,
-                                "target": Object.getOwnPropertyDescriptor(
-                                    bn.data,
-                                    "id"
-                                )?.value
-                            },
-                            "group": "edges"
-                        });
+                        onNodesSelected(selected.
+                            map((value) => Object.getOwnPropertyDescriptor(
+                                value.data,
+                                "id"
+                            )?.value));
 
                     }
 
@@ -124,4 +121,4 @@ const App: React.FunctionComponent<Props> = ({jira, rally}: Props) => {
 
 };
 
-export default App;
+export default TypesMapper;

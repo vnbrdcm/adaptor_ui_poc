@@ -1,0 +1,13 @@
+.vscode
+node_modules
+src
+demo
+tests
+.github
+.babelrc
+.eslintignore
+.eslintrc
+.gitignore
+.npmignore
+tsconfig*
+webpack.config*.js

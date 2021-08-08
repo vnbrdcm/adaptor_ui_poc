@@ -1,12 +1,17 @@
 {
-  "name": "poc",
+  "name": "@krjakbrjak/poc",
   "version": "1.0.0",
   "description": "Connecting graphs",
   "private": "true",
+  "main": "dist/index.js",
   "scripts": {
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
-    "build": "webpack",
+    "build": "webpack --config webpack.config.js && tsc --project tsconfig.types.json",
     "start-dev-server": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vnbrdcm/adaptor_ui_poc.git"
   },
   "author": "Nikita Vakula",
   "license": "MIT",
