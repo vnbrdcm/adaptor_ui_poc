@@ -1,0 +1,14 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "Demo application",
+  "main": "dist/index.js",
+  "scripts": {
+    "run": "webpack serve --config webpack.config.js"
+  },
+  "author": "Nikita Vakula",
+  "license": "MIT",
+  "dependencies": {
+    "@krjakbrjak/poc": "file:.."
+  }
+}

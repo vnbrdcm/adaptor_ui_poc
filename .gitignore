@@ -1,6 +1,5 @@
 node_modules
 build
 *.sw[o,p]
-dist/*.js
-dist/*.txt
-
+dist/**/*.[j,t]s
+dist/**/*.[j,t]s.map
